@@ -15,7 +15,7 @@
                 <div class="text-center">
                     <h4>Authentication</h4>
                 </div>
-                <form id="form1" runat="server">
+                <form runat="server">
                     <div>
                         <div class="form-group">
                             <asp:Label Text="Usuario" runat="server" /> 
@@ -32,10 +32,6 @@
                         </div>
                     </div>
                 </form>
-                <div class="text-center">
-                    <br />
-                    <asp:HyperLink NavigateUrl="googleAuthenticator.aspx" Text="Link google authenticator" runat="server" />
-                </div>
             </div>
         </div>
     </div>

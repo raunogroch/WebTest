@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Web.Security;
 using BussinessLayer;
 
 namespace Presentation
@@ -13,7 +10,7 @@ namespace Presentation
         private BL_Users UserObject = new BL_Users();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //
         }
 
         protected void btnValidate_Click(object sender, EventArgs e)
@@ -23,17 +20,13 @@ namespace Presentation
             bool response = UserObject.authentication(email, password);
             if (response)
             {
-                //alert("authentication correcta");
-                Response.Redirect("home.aspx");
-                
-                // redirect to main googleAuthenticator page
+                Session["login"] = true;
+                FormsAuthentication.RedirectFromLoginPage(email, true);
             }
             else
             {
-                alert("ERROR");
+                Response.Redirect("login.aspx", true);
             }
-
-            // back to login page
            
         }
         private string getObject(string value)

@@ -18,7 +18,6 @@ namespace DataLayer
             }
 
             string resp = verifyPassword(email);
-
             bool comparison = resp.Equals(password);
 
             if (comparison)
@@ -34,24 +33,23 @@ namespace DataLayer
             string data = string.Empty;
             try
             {
-
                 command.Connection = connection.OpenConnection();
                 command.CommandText = "findUser";
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Email", email);
 
-
-                IDataParameter dataResponse = command.CreateParameter();
-                dataResponse.ParameterName = "@Password";
-                dataResponse.Direction = ParameterDirection.Output;
-                dataResponse.DbType = DbType.String;
-                //dataResponse.Size = 50;
-                command.Parameters.Add(dataResponse);
-
-                var res = command.ExecuteReader();
-                command.ExecuteNonQuery();
-
-                data = (string)dataResponse.Value;
+                SqlDataReader reader = command.ExecuteReader();
+                try
+                {
+                    while (reader.Read())
+                    {
+                        data = String.Format("{0}",reader["Password"]);
+                    }
+                }
+                finally
+                {
+                    reader.Close();
+                }
 
 
                 connection.CloseConnection();
